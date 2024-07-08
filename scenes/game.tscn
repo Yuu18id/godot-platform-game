@@ -1,11 +1,14 @@
-[gd_scene load_steps=13 format=3 uid="uid://1o06o6gktnmj"]
+[gd_scene load_steps=16 format=3 uid="uid://1o06o6gktnmj"]
 
+[ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_kdqg8"]
 [ext_resource type="PackedScene" uid="uid://dis6fsp16h6po" path="res://scenes/player.tscn" id="1_v4bmd"]
+[ext_resource type="FontFile" uid="uid://c5g1ejep23w6a" path="res://assets/fonts/PixelOperator8-Bold.ttf" id="2_kivrp"]
 [ext_resource type="Texture2D" uid="uid://dvp7sjqbd71x0" path="res://assets/sprites/world_tileset.png" id="2_wi4cn"]
 [ext_resource type="PackedScene" uid="uid://l6ve1c8j6o5f" path="res://scenes/platform.tscn" id="3_oknxr"]
 [ext_resource type="PackedScene" uid="uid://fx8luhpr276u" path="res://scenes/coin.tscn" id="4_jxfin"]
 [ext_resource type="PackedScene" uid="uid://csvectesal0w1" path="res://scenes/killzone.tscn" id="5_feehi"]
 [ext_resource type="PackedScene" uid="uid://be2ojmvsvsdjy" path="res://scenes/slime.tscn" id="6_6dqxo"]
+[ext_resource type="FontFile" uid="uid://duwe7qmm3u6al" path="res://assets/fonts/PixelOperator8.ttf" id="7_xxy0b"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5xxuh"]
 texture = ExtResource("2_wi4cn")
@@ -434,6 +437,21 @@ sources/0 = SubResource("TileSetAtlasSource_5xxuh")
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_24sbd"]
 distance = -140.0
 
+[sub_resource type="Animation" id="Animation_mi52u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(384, 53)]
+}
+
 [sub_resource type="Animation" id="Animation_wi426"]
 resource_name = "move"
 length = 1.5
@@ -451,21 +469,6 @@ tracks/0/keys = {
 "values": [Vector2(384, 53), Vector2(496, 53)]
 }
 
-[sub_resource type="Animation" id="Animation_mi52u"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(384, 53)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ifgc4"]
 _data = {
 "RESET": SubResource("Animation_mi52u"),
@@ -473,6 +476,23 @@ _data = {
 }
 
 [node name="Game" type="Node2D"]
+
+[node name="GameManager" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("1_kdqg8")
+
+[node name="ScoreLabel" type="Label" parent="GameManager"]
+offset_left = 467.0
+offset_top = -158.0
+offset_right = 574.0
+offset_bottom = -135.0
+theme_override_colors/font_color = Color(0.0117647, 0.14902, 0.34902, 1)
+theme_override_fonts/font = ExtResource("2_kivrp")
+theme_override_font_sizes/font_size = 8
+text = "You collected X coins."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_el6ap")
@@ -526,6 +546,21 @@ position = Vector2(551.375, 71.2594)
 [node name="Coin9" parent="Coins" instance=ExtResource("4_jxfin")]
 position = Vector2(566.625, 71.2594)
 
+[node name="Coin10" parent="Coins" instance=ExtResource("4_jxfin")]
+position = Vector2(782, -25)
+
+[node name="Coin11" parent="Coins" instance=ExtResource("4_jxfin")]
+position = Vector2(807, -23)
+
+[node name="Coin12" parent="Coins" instance=ExtResource("4_jxfin")]
+position = Vector2(831, -24)
+
+[node name="Coin13" parent="Coins" instance=ExtResource("4_jxfin")]
+position = Vector2(648, -105)
+
+[node name="Coin14" parent="Coins" instance=ExtResource("4_jxfin")]
+position = Vector2(542, -103)
+
 [node name="Platforms" type="Node" parent="."]
 
 [node name="Platform" parent="Platforms" instance=ExtResource("3_oknxr")]
@@ -540,20 +575,57 @@ libraries = {
 }
 autoplay = "move"
 
-[node name="Coin" parent="." instance=ExtResource("4_jxfin")]
-position = Vector2(782, -25)
-
-[node name="Coin2" parent="." instance=ExtResource("4_jxfin")]
-position = Vector2(807, -23)
-
-[node name="Coin3" parent="." instance=ExtResource("4_jxfin")]
-position = Vector2(831, -24)
-
-[node name="Coin4" parent="." instance=ExtResource("4_jxfin")]
-position = Vector2(648, -105)
-
-[node name="Coin5" parent="." instance=ExtResource("4_jxfin")]
-position = Vector2(574, -104)
-
 [node name="Slime" parent="." instance=ExtResource("6_6dqxo")]
 position = Vector2(607, 80)
+
+[node name="Labels" type="Node" parent="."]
+
+[node name="Label" type="Label" parent="Labels"]
+offset_left = -79.0
+offset_top = 33.0
+offset_right = 93.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(0.0117647, 0.14902, 0.34902, 1)
+theme_override_fonts/font = ExtResource("7_xxy0b")
+theme_override_font_sizes/font_size = 8
+text = "W, A, D to move."
+
+[node name="Label2" type="Label" parent="Labels"]
+offset_left = 367.0
+offset_top = 8.0
+offset_right = 539.0
+offset_bottom = 31.0
+theme_override_colors/font_color = Color(0.0117647, 0.14902, 0.34902, 1)
+theme_override_fonts/font = ExtResource("7_xxy0b")
+theme_override_font_sizes/font_size = 8
+text = "It's moving.."
+
+[node name="Label3" type="Label" parent="Labels"]
+offset_left = 581.0
+offset_top = 3.0
+offset_right = 753.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.0117647, 0.14902, 0.34902, 1)
+theme_override_fonts/font = ExtResource("7_xxy0b")
+theme_override_font_sizes/font_size = 8
+text = "Creature"
+
+[node name="Label4" type="Label" parent="Labels"]
+offset_left = 455.0
+offset_top = -108.0
+offset_right = 627.0
+offset_bottom = -85.0
+theme_override_colors/font_color = Color(0.0117647, 0.14902, 0.34902, 1)
+theme_override_fonts/font = ExtResource("7_xxy0b")
+theme_override_font_sizes/font_size = 8
+text = "Come here.."
+
+[node name="Label5" type="Label" parent="Labels"]
+offset_left = 893.0
+offset_top = -32.0
+offset_right = 1065.0
+offset_bottom = -9.0
+theme_override_colors/font_color = Color(0.0117647, 0.14902, 0.34902, 1)
+theme_override_fonts/font = ExtResource("7_xxy0b")
+theme_override_font_sizes/font_size = 8
+text = "Wrong way.."
